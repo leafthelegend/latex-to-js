@@ -11,6 +11,7 @@ var latex_to_js = function(input) {
 		st1 = st1.replace(/\\div/g, "/");
 
 		//pi
+		
 		st1 = st1.replace(/([0-9a-zA-Z\.]+)\\pi/g, "$1*3.141592653589793238");
 		st1 = st1.replace(/\\pi([0-9a-zA-Z\.]+)/g, "3.141592653589793238*$1");
 		st1 = st1.replace(/([0-9a-zA-Z\.]+)\\pi([0-9a-zA-Z\.]+)/g, "$1*3.141592653589793238*$2");
