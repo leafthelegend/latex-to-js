@@ -75,14 +75,37 @@ var latex_to_js = function(input) {
 
 	nth_power = function(input) {
 		//first case: single number with curly bracket power
-		while (input.search(/([0-9a-zA-Z\.]+)\^\{(((?![\{\}]).)*)\}/) >= 0) {
+		while (input.search(/([0-9\.]+)\^\{(((?![\{\}]).)*)\}/) >= 0) {
 
-			input = input.replace(/([0-9a-zA-Z\.]+)\^\{(((?![\{\}]).)*)\}/g, "pow($1,$2)");
+			input = input.replace(/([0-9\.]+)\^\{(((?![\{\}]).)*)\}/g, "pow($1,$2)");
 		}
-		//second case: single number without curly bracket
-		while (input.search(/([0-9a-zA-Z\.]+)\^([0-9a-zA-Z\.]+)/) >= 0) {
+		//lower case pronumeral with curly bracket power
+		while (input.search(/([a-z]{1})\^\{(((?![\{\}]).)*)\}/) >= 0) {
 
-			input = input.replace(/([0-9a-zA-Z\.]+)\^([0-9a-zA-Z\.]+)/g, "pow($1,$2)");
+			input = input.replace(/([a-z]{1})\^\{(((?![\{\}]).)*)\}/g, "pow($1,$2)");
+		}
+		//upper case pronumeral with curly bracket power
+		while (input.search(/([A-Z]{1})\^\{(((?![\{\}]).)*)\}/) >= 0) {
+
+			input = input.replace(/([A-Z]{1})\^\{(((?![\{\}]).)*)\}/g, "pow($1,$2)");
+		}
+
+		//second case: single number without curly bracket
+		while (input.search(/([0-9\.]+)\^([0-9a-zA-Z\.]+)/) >= 0) {
+
+			input = input.replace(/([0-9\.]+)\^([0-9a-zA-Z\.]+)/g, "pow($1,$2)");
+		}
+
+		//single lower case pronumeral without curly bracket
+		while (input.search(/([a-z]{1})\^([0-9a-zA-Z\.]+)/) >= 0) {
+
+			input = input.replace(/([a-z]{1})\^([0-9a-zA-Z\.]+)/g, "pow($1,$2)");
+		}
+
+		//single upper case pronumeral without curly bracket
+		while (input.search(/([A-Z]{1})\^([0-9a-zA-Z\.]+)/) >= 0) {
+
+			input = input.replace(/([A-Z]{1})\^([0-9a-zA-Z\.]+)/g, "pow($1,$2)");
 		}
 
 		//third case: bracket number without curly bracket power
@@ -390,7 +413,7 @@ try{
 	cleanUpString = cleanUpString.replace(/8Math/g, "8*Math");
 	cleanUpString = cleanUpString.replace(/9Math/g, "9*Math");
 	cleanUpString = cleanUpString.replace(/\)Math/g, ")*Math");
-
+	console.log(cleanUpString);
 	return cleanUpString;
 }catch{
 	throw('syntax error');
